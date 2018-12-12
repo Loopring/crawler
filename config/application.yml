@@ -1,0 +1,43 @@
+## application config, this file will be loaded by spring automatically.
+# org.hibernate.dialect.MySQL5InnoDBDialect
+
+spring:
+  config:
+    location: "config"
+
+  profiles:
+    active: default
+
+---
+
+spring:
+  profiles: default
+  datasource:
+    connection-init-sql: set names 'utf8mb4'
+
+common:
+  datasource:
+    db-local:
+      url: jdbc:mysql://localhost/crawler?useUnicode=true&amp;characterEncoding=UTF-8&verifyServerCertificate=false&useSSL=false&requireSSL=false
+      username: root
+      password: root
+
+  crawljax:
+    browser-type: chrome
+    proxy:
+      isOn: true
+      genClass: com.creditease.crawler.core.Data5uDynamicIpProxyServer
+
+  processor:
+    query:
+      orderBy: asc
+
+cluster:
+  clusterOn: true
+
+mergetask:
+  merge-service-url: "http://localhost:8080/merge"
+  need-update: false
+
+  merge-entities:
+    - "com.creditease.crawler.models.Institution"

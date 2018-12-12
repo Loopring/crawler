@@ -1,0 +1,99 @@
+test:
+  
+  test-selectors:
+    - key: wdzj-news-detail
+      source-site-name: wdzj
+      is-root: true
+      name: root
+      value-type: node
+      children:
+        - name: "title"
+          css-selector: "h1.s-title"
+          value-type: "text"
+        - name: "publishTimeStr"
+          css-selector: "div.show-box div.s-bq>span:nth-child(1)"
+          value-type: "text"
+        - name: "author"
+          css-selector: "div.show-box div.s-bq>span:nth-child(3)"
+          value-type: "text"
+        - name: "source"
+          css-selector: "div.show-box div.s-bq>span:nth-child(2)"
+          value-type: "text"
+        - name: "absContent"
+          css-selector: "div.show-box div.s-zy"
+          value-type: "text"
+
+    - key: wdzj-news-links
+      source-site-name: wdzj
+      is-root: true
+      name: root
+      value-type: node
+      css-selector: "ul.zllist li h3 a"
+      children:
+        - name: "title"
+          value-type: "text"
+        - name: "url"
+          value-type: "attr"
+          attr-name: "href"
+          
+    - key: pbcgov-news-links
+      source-site-name: pbcgov
+      is-root: true
+      name: root
+      value-type: node
+      css-selector: "font.newslist_style a, td.font14.bgdian a"
+      children:
+        - name: "title"
+          value-type: "text"
+        - name: "url"
+          value-type: "attr"
+          attr-name: "href"
+
+    - key: 12306-ticket-query
+      source-site-name: 12306
+      is-root: true
+      name: root
+      value-type: node
+      json-path: "$.data.result"
+      children:
+        - name: "content"
+          json-path: "$"
+          
+    - key: csrc-ml-detail-selector
+      source-site-name: "中国证券监督管理委员会"
+      is-root: true
+      name: root
+      value-type: node
+      css-selector: ""
+      children:
+        - name: "publishTimeStr"
+          css-selector: "table#headContainer tr:nth-child(2) table td:nth-child(2) span"
+          value-type: "text"
+        - name: "title"
+          css-selector: "span#lTitle"
+          value-type: "text"
+        - name: "content"
+          css-selector: "div.Custom_UnionStyle"
+          value-type: "article"
+        - name: "contentHtml"
+          css-selector: "div.Custom_UnionStyle"
+          value-type: "html"
+
+    - key: pbc-detail-selector
+      source-site-name: "中国人民银行"
+      is-root: true
+      name: root
+      value-type: node
+      children:
+        - name: "title"
+          css-selector: "h2"
+          value-type: "text"
+        - name: "content"
+          css-selector: "font#zoom"
+          value-type: "article"
+        - name: "contentHtml"
+          css-selector: "font#zoom"
+          value-type: "html"
+        - name: "publishTimeStr"
+          css-selector: "td.hui12"
+          value-type: "text"

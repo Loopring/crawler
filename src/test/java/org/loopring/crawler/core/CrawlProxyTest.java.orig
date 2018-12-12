@@ -1,0 +1,195 @@
+package com.creditease.crawler.core;
+
+import java.util.LinkedList;
+import java.util.List;
+<<<<<<< HEAD
+=======
+import java.util.Map;
+>>>>>>> add junit test
+
+import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import com.creditease.crawler.config.JpaConfig;
+import com.creditease.crawler.core.config.WatchedLinkCollectorConfig;
+<<<<<<< HEAD
+import com.creditease.crawler.models.Link;
+=======
+import com.creditease.crawler.models.LawsArticle;
+>>>>>>> add junit test
+import com.creditease.crawler.models.SelectorItem;
+import com.creditease.crawler.models.WatchedLink;
+import com.creditease.crawler.repos.WatchedLinkRepo;
+import com.creditease.crawler.service.SelectorService;
+import com.creditease.crawler.tasks.financelaws.FinanceLawsMetaLinkGenerator;
+import com.creditease.crawler.tasks.financelaws.FinanceLawsWatchedLinkTask;
+import com.creditease.crawler.test.TestAppContext;
+<<<<<<< HEAD
+
+import lombok.Data;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+
+@Data
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = {TestAppContext.class, JpaConfig.class, FinanceLawsMetaLinkGenerator.class,
+        FinanceLawsWatchedLinkTask.class})
+=======
+import com.creditease.crawler.util.ConvertUtil;
+
+import lombok.Data;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+@Data
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = {TestAppContext.class, JpaConfig.class, FinanceLawsMetaLinkGenerator.class, FinanceLawsWatchedLinkTask.class})
+>>>>>>> add junit test
+@FixMethodOrder(MethodSorters.JVM)
+public class CrawlProxyTest {
+
+    @Autowired
+    private FinanceLawsMetaLinkGenerator generator;
+
+    @Autowired
+<<<<<<< HEAD
+    private FinanceLawsWatchedLinkTask crawler;
+=======
+    private FinanceLawsWatchedLinkTask task;
+>>>>>>> add junit test
+
+    @Autowired
+    private WatchedLinkRepo watchedLinkRepo;
+
+<<<<<<< HEAD
+    private List<WatchedLink> watchedLinks;
+=======
+    private WebPageCrawler crawler;
+
+
+    private static List<WatchedLink> multipleLink = new LinkedList<>();
+>>>>>>> add junit test
+
+    @BeforeClass
+    public static void setup() {
+
+<<<<<<< HEAD
+        System.setProperty("spring.config.location", "classpath:/config/finance-laws-linkcollect.yml, " +
+                "classpath:/config/finance-laws-processors.yml, classpath:/config/finance-laws-selectors.yml");
+=======
+        System.setProperty("spring.config.location", "classpath:/config/finance-laws-linkcollect.yml, " + "classpath:/config/finance-laws-processors.yml, classpath:/config/finance-laws-selectors.yml");
+>>>>>>> add junit test
+    }
+
+    @Test
+    public void testGenerate() {
+
+        int count = 0;
+        List<String> taskNames = new LinkedList<>();
+        for (WatchedLinkCollectorConfig config : generator.getExecuteOnlyOnceCollectors()) {
+            taskNames.add(config.getTaskName());
+            count += config.getLinkGeneratorConfig().getRepeatedCrawlUrls().size();
+        }
+        generator.generate();
+        assertEquals(count, watchedLinkRepo.countByTaskNameIn(taskNames));
+    }
+
+    @Test
+<<<<<<< HEAD
+    public void testCrawl() {
+
+        if (crawler.getWatchedTasks().size() > 2) {
+            // TODO: assert failed!
+        }
+        crawler.saveSelectors();
+        for (String taskName : crawler.getWatchedTasks()) {
+            watchedLinks = watchedLinkRepo.findByTaskNameAndStatusLessThan(taskName, Link.STATUS_SUCCEEDED);
+            for (WatchedLink watchedLink : watchedLinks) {
+                String crawlType = watchedLink.getCrawlType();
+                if (crawlType.equals("single")) {
+                    crawlSingle(watchedLink);
+                } else if (crawlType.equals("multiple")) {
+                    crawlMultiple();
+                }
+            }
+        }
+        //assert
+
+    }
+
+    private void crawlSingle(WatchedLink watchedLink) {
+
+        String url = "http://www.pbc.gov.cn/rmyh/105208/3293300/index.html";
+        String selectorKey = "pbc-detail-selector";
+
+        SelectorItem si = getSelectorItem(selectorKey);
+        assertThat(si).isNotNull();
+
+        Selector rootSelector = SelectorService.selectorItemToSelector(si);
+
+        CrawlTask task = CrawlTask.newHtmlCrawlTask(url, CrawlType.single, rootSelector);
+    }
+
+=======
+    public void testCrawlMultiple() throws Exception {
+
+        for (WatchedLinkCollectorConfig config : generator.getExecuteOnlyOnceCollectors()) {
+
+            if ("multiple".equals(config.getCrawlType())) {
+                Selector rootSelector = getSelectorByKey(config.getSelectorKey());
+                List<WatchedLink> watchedLinks = new LinkedList<>();
+                for (String url : config.getLinkGeneratorConfig().getRepeatedCrawlUrls()) {
+                    crawler = new JsoupWebPageCrawler(url, rootSelector);
+                    List<Map<String, String>> data = crawler.crawlMultiple();
+                    assertNotNull(data);
+                    assertTrue(data.size() > 1);
+                    for (Map<String, String> datum : data) {
+                        WatchedLink wl = ConvertUtil.mapToBean(datum, WatchedLink.class);
+                        assertNotNull(wl.getUrl());
+                        assertNotEquals("", wl.getUrl());
+                        assertNotNull(wl.getTitle());
+                        assertNotEquals("", wl.getTitle());
+                        watchedLinks.add(wl);
+                    }
+                }
+                multipleLink.addAll(watchedLinks);
+            }
+        }
+    }
+
+    @Test
+    public void testCrawlSingle() throws Exception {
+
+        for (WatchedLink watchedLink : multipleLink) {
+            if ("single".equals(watchedLink.getCrawlType())) {
+                Selector rootSelector = getSelectorByKey(watchedLink.getSelectorKey());
+                crawler = new JsoupWebPageCrawler(watchedLink.getUrl(), rootSelector);
+                Map<String, String> data = crawler.crawlSingle();
+                assertNotNull(data);
+                LawsArticle article = ConvertUtil.mapToBean(data, LawsArticle.class);
+                assertTrue(article.isValid());
+            }
+        }
+    }
+
+    private Selector getSelectorByKey(String key) {
+>>>>>>> add junit test
+
+        for (SelectorItem si : task.getAllSelectors()) {
+            if (key.equals(si.getKey())) {
+                return SelectorService.selectorItemToSelector(si);
+            }
+        }
+        return null;
+    }
+}

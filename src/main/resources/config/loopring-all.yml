@@ -1,0 +1,88 @@
+loopring:
+  link-collector:
+    initial-delay-str: 5000
+    fixed-rate-str: 60000
+
+  link-processors:
+    initial-delay-str: 5000
+    fixed-rate-str: 600000
+
+  entity-processors:
+    initial-delay-str: 8000
+    fixed-rate-str: 5000
+
+  processor-threadpool-max: 6
+
+############# execute peroidically: ###############
+  watched-link-seeds:
+    - task-name: jinse-links
+      source-site-name: jinse
+      selector-key: jinse-links
+      target-entity: "org.loopring.crawler.models.WatchedLink"
+      crawl-method: json
+      crawl-type: multiple
+      need-update: false
+      link-generator-config:
+        repeatedCrawlUrls:
+          - "https://api.jinse.com/v1/topic/search?search=lrc&page=1&limit=10&is_true=1&get_total=1"
+          - "https://api.jinse.com/v1/topic/search?search=eth&page=1&limit=10&is_true=1&get_total=1"
+
+  all-selectors:
+    - key: jinse-links
+      source-site-name: jinse
+      is-root: true
+      name: root
+      json-path: "$.list"
+      children:
+        - name: "selectorKey"
+          value-type: "constant"
+          const-value: "jinse-news"
+        - name: "sourceSiteName"
+          value-type: "constant"
+          const-value: "jinse"
+        - name: "crawlType"
+          value-type: "constant"
+          const-value: "single"
+        - name: "crawlMethod"
+          value-type: "constant"
+          const-value: "jsoup"
+        - name: "targetEntity"
+          value-type: "constant"
+          const-value: "org.loopring.crawler.models.JinseNews"
+        - name: "taskName"
+          value-type: "constant"
+          const-value: "jinse-news"
+        - name: "title"
+          json-path: "$.title"
+        - name: "url"
+          json-path: "$.topic_url"
+
+    - key: jinse-news
+      source-site-name: jinse
+      is-root: true
+      name: root
+      value-type: node
+      css-selector: "div.js-article"
+      children:
+        - name: "title"
+          value-type: "text"
+          css-selector: "div.title h2"
+        - name: "author"
+          value-type: "text"
+          css-selector: "div.article-info a"
+        - name: "publishTimeStr"
+          value-type: "text"
+          css-selector: "div.article-info div.time"
+        - name: "content"
+          value-type: "text"
+          css-selector: "div.js-article-detail"
+        - name: "contentHtml"
+          value-type: "html"
+          css-selector: "div.js-article-detail"
+
+
+  link-tasks:
+     - "jinse-links"
+
+  entity-tasks:
+     - "jinse-news"

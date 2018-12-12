@@ -1,0 +1,49 @@
+## application config, this file will be loaded by spring automatically.
+# org.hibernate.dialect.MySQL5InnoDBDialect
+
+spring:
+  config:
+    location: "config"
+
+  profiles:
+    active: default
+
+---
+
+spring:
+  profiles: default
+  datasource:
+    connection-init-sql: set names 'utf8mb4'
+
+common:
+  datasource:
+    db-local:
+      url: jdbc:mysql://localhost/crawler?useUnicode=true&amp;characterEncoding=UTF-8&verifyServerCertificate=false&useSSL=false&requireSSL=false
+      username: root
+      password: root
+      driver-class-name: com.mysql.jdbc.Driver
+      test-on-borrow: true
+      validation-query: SELECT version()
+
+  hibernate:
+    hib_hbm2ddl_auto: update
+    hib_show_sql: false
+    hib_dialect: org.hibernate.dialect.MySQLDialect
+
+  crawljax:
+    browser-type: chrome
+    proxy:
+      isOn: false
+      serverHost: proxy.abuyun.com
+      serverPort: 9020
+      username: HY9S70465YC17PZD
+      password: 434D4208D0FCE333
+
+  processor:
+    query:
+      orderBy: desc
+
+cluster:
+  cluster-on: true
+
+---
