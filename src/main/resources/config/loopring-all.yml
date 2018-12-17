@@ -74,7 +74,7 @@ loopring:
           value-type: "text"
           css-selector: "div.article-info div.time"
         - name: "content"
-          value-type: "text"
+          value-type: "article"
           css-selector: "div.js-article-detail"
         - name: "contentHtml"
           value-type: "html"

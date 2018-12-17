@@ -2,5 +2,5 @@
 
 mvn clean package spring-boot:repackage -DskipTests
 
-java -jar target/crawler-0.9.2.jar $@
+java -jar target/crawler-1.0.0.jar $@
 
