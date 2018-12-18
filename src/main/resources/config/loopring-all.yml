@@ -39,7 +39,7 @@ loopring:
           const-value: "jinse-news"
         - name: "sourceSiteName"
           value-type: "constant"
-          const-value: "jinse"
+          const-value: "金色财经"
         - name: "crawlType"
           value-type: "constant"
           const-value: "single"
@@ -58,7 +58,7 @@ loopring:
           json-path: "$.topic_url"
 
     - key: jinse-news
-      source-site-name: jinse
+      source-site-name: "金色财经"
       is-root: true
       name: root
       value-type: node

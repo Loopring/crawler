@@ -20,7 +20,7 @@ common:
     db-local:
       url: jdbc:mysql://localhost/crawler?useUnicode=true&amp;characterEncoding=UTF-8&verifyServerCertificate=false&useSSL=false&requireSSL=false
       username: root
-      password: 123456
+      password: 111111
 
   crawljax:
     browser-type: chrome

@@ -147,7 +147,7 @@ public class JsoupParser {
         } else if (valueType == ValueType.article) {
             Elements es = getSelectedElements();
             String htmlText = es.html();
-            String articleText = Jsoup.clean(htmlText, "", Whitelist.none(), new Document.OutputSettings().prettyPrint(false));
+            String articleText = Jsoup.clean(htmlText, "", new Whitelist().addTags("img").addAttributes("img", "src"), new Document.OutputSettings().prettyPrint(false));
             articleText = org.jsoup.parser.Parser.unescapeEntities(articleText, false);
             return articleText;
         } else {
