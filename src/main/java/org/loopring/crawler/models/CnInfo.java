@@ -9,9 +9,9 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "jinse_news")
+@Table(name = "cn_info")
 @Data
-public class JinseNews extends BasicModel {
+public class CnInfo extends BasicModel {
 
     @Column(columnDefinition = "text")
     private String title;
@@ -51,6 +51,21 @@ public class JinseNews extends BasicModel {
 
     @Column
     private Long level;
+    
+    @Column
+    private String language;
+    
+    @Column(name = "news_category")
+    private String newsCategory;
+    
+    @Column(name = "bull_index")
+    private Long bullIndex;
+    
+    @Column(name = "bear_index")
+    private Long bearIndex;
+    
+    @Column(name = "forward_num")
+    private Long forwardNum;
 
     @Override
     public boolean isValid() {

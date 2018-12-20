@@ -26,10 +26,21 @@ loopring:
         repeatedCrawlUrls:
           - "https://api.jinse.com/v1/topic/search?search=lrc&page=1&limit=10&is_true=1&get_total=1"
           - "https://api.jinse.com/v1/topic/search?search=eth&page=1&limit=10&is_true=1&get_total=1"
+          
+    - task-name: gongxiangcj-short-news-links
+      source-site-name: "共享财经"
+      selector-key: gongxiangcj-short-news
+      target-entity: "org.loopring.crawler.models.CnInfo"
+      crawl-method: jsoup
+      crawl-type: multiple
+      need-update: false
+      link-generator-config:
+        repeated-crawl-urls:
+          - "http://www.gongxiangcj.com/short_news"
 
   all-selectors:
     - key: jinse-links
-      source-site-name: jinse
+      source-site-name: "金色财经"
       is-root: true
       name: root
       json-path: "$.list"
@@ -48,7 +59,7 @@ loopring:
           const-value: "jsoup"
         - name: "targetEntity"
           value-type: "constant"
-          const-value: "org.loopring.crawler.models.JinseNews"
+          const-value: "org.loopring.crawler.models.CnInfo"
         - name: "taskName"
           value-type: "constant"
           const-value: "jinse-news"
@@ -76,13 +87,64 @@ loopring:
         - name: "content"
           value-type: "article"
           css-selector: "div.js-article-detail"
-        - name: "contentHtml"
-          value-type: "html"
-          css-selector: "div.js-article-detail"
+        - name: "language"
+          value-type: "constant"
+          const-value: "CHINESE"
+        - name: "tags"
+          value-type: "textarray"
+          css-selector: "div.tags a"
+        - name: "newsCategory"
+          value-type: "constant"
+          const-value: "INFORMATION"
+        - name: "bullIndex"
+          value-type: "constant"
+          const-value: 0
+        - name: "bearIndex"
+          value-type: "constant"
+          const-value: 0
+        - name: "forwardNum"
+          value-type: "constant"
+          const-value: 0
+          
+  ###############################################################################
+    - key: gongxiangcj-short-news
+      source-site-name: "共享财经"
+      is-root: true
+      name: root
+      value-type: node
+      uuid-fields: "url,title"
+      css-selector: "div.kx-left-kuai div.kx-left-kuai-new"
+      children:
+        - name: "title"
+          css-selector: "div.kx-left-kuai-new-title"
+          value-type: "text"
+        - name: "publishTimeStr"
+          css-selector: "div.kx-left-kuai-new-date"
+          value-type: "text"
+        - name: "source"
+          value-type: "constant"
+          const-value: "共享财经"
+        - name: "content"
+          css-selector: "div.kx-left-kuai-new-con p"
+          value-type: "article"
+        - name: "newsCategory"
+          value-type: "constant"
+          const-value: "FLASH"
+        - name: "bullIndex"
+          value-type: "constant"
+          const-value: 0
+        - name: "bearIndex"
+          value-type: "constant"
+          const-value: 0
+        - name: "forwardNum"
+          value-type: "constant"
+          const-value: 0
+
 
 
   link-tasks:
-     - "jinse-links"
-
+    - "jinse-links"
+    
   entity-tasks:
-     - "jinse-news"
+    - "gongxiangcj-short-news-links"
+    - "jinse-news"

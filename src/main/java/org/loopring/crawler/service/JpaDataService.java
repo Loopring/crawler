@@ -15,8 +15,8 @@ import org.loopring.crawler.core.ValueParser;
 import org.loopring.crawler.models.BasicModel;
 import org.loopring.crawler.models.TimeCursor;
 import org.loopring.crawler.models.WatchedLink;
-import org.loopring.crawler.models.JinseNews;
-import org.loopring.crawler.repos.JinseNewsRepo;
+import org.loopring.crawler.models.CnInfo;
+import org.loopring.crawler.repos.CnInfoRepo;
 import org.loopring.crawler.repos.WatchedLinkRepo;
 import org.loopring.crawler.repos.TimeCursorRepo;
 import org.loopring.crawler.util.ConvertUtil;
@@ -36,13 +36,13 @@ public class JpaDataService {
     private TimeCursorRepo timeCursorRepo;
 
     @Autowired
-    private JinseNewsRepo jinseNewsRepo;
+    private CnInfoRepo cnInfoRepo;
 
     public CrawlerCrudRepo<? extends BasicModel> getRepoByEntityName(String className) {
         CrawlerCrudRepo<? extends BasicModel> crudRepo = null;
         switch (className) {
-            case "org.loopring.crawler.models.JinseNews":
-                crudRepo = jinseNewsRepo;
+            case "org.loopring.crawler.models.CnInfo":
+                crudRepo = cnInfoRepo;
                 break;
             default:
                 crudRepo = null;
@@ -82,9 +82,9 @@ public class JpaDataService {
                 wlSaver.setNeedUpdate(needUpdate);
                 wlSaver.saveData();
                 break;
-            case "org.loopring.crawler.models.JinseNews":
-                DataSaver<JinseNews> newsSaver = new DataSaver<>(dataMap, JinseNews.class);
-                newsSaver.setDataRepo(jinseNewsRepo);
+            case "org.loopring.crawler.models.CnInfo":
+                DataSaver<CnInfo> newsSaver = new DataSaver<>(dataMap, CnInfo.class);
+                newsSaver.setDataRepo(cnInfoRepo);
                 newsSaver.setNeedUpdate(needUpdate);
                 newsSaver.saveData();
                 break;
@@ -101,8 +101,8 @@ public class JpaDataService {
 
         List<String> resList;
         switch (entityClassName) {
-            case "org.loopring.crawler.models.JinseNews":
-                CursoredDataFetcher<JinseNews> entFetcher = new CursoredDataFetcher<>(taskName, entityClassName, fieldName, jinseNewsRepo);
+            case "org.loopring.crawler.models.CnInfo":
+                CursoredDataFetcher<CnInfo> entFetcher = new CursoredDataFetcher<>(taskName, entityClassName, fieldName, cnInfoRepo);
                 entFetcher.setTimeCursorRepo(timeCursorRepo);
                 entFetcher.setSourceSiteName(sourceSiteName);
                 resList = entFetcher.getFieldValues();
