@@ -95,7 +95,7 @@ loopring:
           css-selector: "div.tags a"
         - name: "newsCategory"
           value-type: "constant"
-          const-value: "INFORMATION"
+          const-value: "information"
         - name: "bullIndex"
           value-type: "constant"
           const-value: 0
@@ -129,7 +129,7 @@ loopring:
           value-type: "article"
         - name: "newsCategory"
           value-type: "constant"
-          const-value: "FLASH"
+          const-value: "flash"
         - name: "bullIndex"
           value-type: "constant"
           const-value: 0
