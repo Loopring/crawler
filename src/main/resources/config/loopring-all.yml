@@ -37,6 +37,17 @@ loopring:
       link-generator-config:
         repeated-crawl-urls:
           - "http://www.gongxiangcj.com/short_news"
+          
+    - task-name: 8btc-short-news-links
+      source-site-name: "巴比特"
+      selector-key: 8btc-short-news
+      target-entity: "org.loopring.crawler.models.CnInfo"
+      crawl-method: jsoup
+      crawl-type: multiple
+      need-update: false
+      link-generator-config:
+        repeated-crawl-urls:
+          - "https://www.8btc.com/flash"
 
   all-selectors:
     - key: jinse-links
@@ -142,6 +153,40 @@ loopring:
         - name: "language"
           value-type: "constant"
           const-value: "zh-Hans"
+          
+   ###############################################################################
+    - key: 8btc-short-news
+      source-site-name: "巴比特"
+      is-root: true
+      name: root
+      value-type: node
+      uuid-fields: "url,title"
+      css-selector: "ul.flash-list li"
+      children:
+        - name: "title"
+          css-selector: "div.flash-item__body a span"
+          value-type: "text"
+        - name: "source"
+          css-selector: "div.operate-box.bbt-clearfix span a"
+          value-type: "text"
+        - name: "content"
+          css-selector: "div.flash-item__body div"
+          value-type: "article"
+        - name: "newsCategory"
+          value-type: "constant"
+          const-value: "flash"
+        - name: "bullIndex"
+          value-type: "constant"
+          const-value: 0
+        - name: "bearIndex"
+          value-type: "constant"
+          const-value: 0
+        - name: "forwardNum"
+          value-type: "constant"
+          const-value: 0
+        - name: "language"
+          value-type: "constant"
+          const-value: "zh-Hans"
 
 
 
@@ -149,5 +194,6 @@ loopring:
     - "jinse-links"
     
   entity-tasks:
+    - "8btc-short-news-links"
     - "gongxiangcj-short-news-links"
     - "jinse-news"

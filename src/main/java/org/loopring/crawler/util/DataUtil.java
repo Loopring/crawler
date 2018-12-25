@@ -25,7 +25,7 @@ public class DataUtil {
         String uuid = null;
         String uuidFields = dataMap.get("uuidFields");
         if (uuidFields == null || uuidFields.trim().equals("")) {
-            uuidFields = "url,title";
+            uuidFields = "url,content";
         }
 
         String[] fieldNames = uuidFields.split(",");
