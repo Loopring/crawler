@@ -24,8 +24,10 @@ loopring:
       need-update: false
       link-generator-config:
         repeatedCrawlUrls:
-          - "https://api.jinse.com/v1/topic/search?search=lrc&page=1&limit=10&is_true=1&get_total=1"
           - "https://api.jinse.com/v1/topic/search?search=eth&page=1&limit=10&is_true=1&get_total=1"
+          - "https://api.jinse.com/v1/topic/search?search=btc&page=1&limit=10&is_true=1&get_total=1"
+          - "https://api.jinse.com/v1/topic/search?search=lrc&page=1&limit=10&is_true=1&get_total=1"
+          - "https://api.jinse.com/v1/topic/search?search=lrn&page=1&limit=10&is_true=1&get_total=1"
           
     - task-name: gongxiangcj-short-news-links
       source-site-name: "共享财经"
@@ -48,7 +50,22 @@ loopring:
       link-generator-config:
         repeated-crawl-urls:
           - "https://www.8btc.com/flash"
-
+          
+    - task-name: loopring-blogs-links
+      source-site-name: "路印官方博客"
+      selector-key: loopring-blogs-links
+      target-entity: "org.loopring.crawler.models.WatchedLink"
+      crawl-method: jsoup
+      crawl-type: multiple
+      need-update: false
+      link-generator-config:
+        repeatedCrawlUrls:
+          - "https://blogs.loopring.org/"
+          
+ ###############################################################################
+ ###############################################################################
+ ###############################################################################
+   
   all-selectors:
     - key: jinse-links
       source-site-name: "金色财经"
@@ -92,6 +109,9 @@ loopring:
         - name: "author"
           value-type: "text"
           css-selector: "div.article-info a"
+        - name: "source"
+          css-selector: "div.article-info a"
+          value-type: "text"
         - name: "publishTimeStr"
           value-type: "text"
           css-selector: "div.article-info div.time"
@@ -117,13 +137,12 @@ loopring:
           value-type: "constant"
           const-value: 0
           
-  ###############################################################################
+###############################################################################
     - key: gongxiangcj-short-news
       source-site-name: "共享财经"
       is-root: true
       name: root
       value-type: node
-      uuid-fields: "url,title"
       css-selector: "div.kx-left-kuai div.kx-left-kuai-new"
       children:
         - name: "title"
@@ -154,13 +173,12 @@ loopring:
           value-type: "constant"
           const-value: "zh-Hans"
           
-   ###############################################################################
+ ###############################################################################
     - key: 8btc-short-news
       source-site-name: "巴比特"
       is-root: true
       name: root
       value-type: node
-      uuid-fields: "url,title"
       css-selector: "ul.flash-list li"
       children:
         - name: "title"
@@ -187,13 +205,91 @@ loopring:
         - name: "language"
           value-type: "constant"
           const-value: "zh-Hans"
-
-
+          
+ ###############################################################################
+    - key: loopring-blogs-links
+      source-site-name: "路印官方博客"
+      is-root: true
+      name: root
+      value-type: node
+      css-selector: "div.post-feed article"
+      children:
+        - name: "selectorKey"
+          value-type: "constant"
+          const-value: "loopring-blogs"
+        - name: "urlBase"
+          value-type: "constant"
+          const-value: "https://blogs.loopring.org"
+        - name: "sourceSiteName"
+          value-type: "constant"
+          const-value: "路印官方博客"
+        - name: "crawlType"
+          value-type: "constant"
+          const-value: "single"
+        - name: "crawlMethod"
+          value-type: "constant"
+          const-value: "jsoup"
+        - name: "targetEntity"
+          value-type: "constant"
+          const-value: "org.loopring.crawler.models.CnInfo"
+        - name: "taskName"
+          value-type: "constant"
+          const-value: "loopring-blogs"
+        - name: "title"
+          css-selector: "div.post-card-content a header h2"
+          value-type: "text"
+        - name: "url"
+          css-selector: "div.post-card-content a"
+          value-type: "attr"
+          attr-name: "href"
+          
+    - key: loopring-blogs
+      source-site-name: "路印官方博客"
+      is-root: true
+      name: root
+      value-type: node
+      css-selector: "article"
+      children:
+        - name: "title"
+          css-selector: "header section h1"
+          value-type: "text"
+        - name: "source"
+          css-selector: "div.operate-box.bbt-clearfix span a"
+          value-type: "text"
+        - name: "content"
+          css-selector: "section div"
+          value-type: "article"
+          value-parser-class: "org.loopring.crawler.tasks.LoopringBlogContentParser"
+        - name: "newsCategory"
+          value-type: "constant"
+          const-value: "information"
+        - name: "bullIndex"
+          value-type: "constant"
+          const-value: 0
+        - name: "bearIndex"
+          value-type: "constant"
+          const-value: 0
+        - name: "forwardNum"
+          value-type: "constant"
+          const-value: 0
+        - name: "language"
+          value-type: "constant"
+          const-value: "zh-Hans"
+        - name: "publishTimeStr"
+          value-type: "text"
+          css-selector: "header section time"
+        - name: "sourceUrl"
+          css-selector: "figure"
+          value-type: "attr"
+          attr-name: "style"
+          value-parser-class: "org.loopring.crawler.tasks.LoopringBlogImageUrlParser"
 
   link-tasks:
     - "jinse-links"
+    - "loopring-blogs-links"
     
   entity-tasks:
     - "8btc-short-news-links"
     - "gongxiangcj-short-news-links"
     - "jinse-news"
+    - "loopring-blogs"
