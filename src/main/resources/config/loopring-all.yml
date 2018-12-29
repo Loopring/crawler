@@ -62,6 +62,18 @@ loopring:
         repeatedCrawlUrls:
           - "https://blogs.loopring.org/"
           
+    - task-name: blockchaintechnology-news-links
+      source-site-name: "blockchaintechnology-news"
+      selector-key: blockchaintechnology-news-links
+      target-entity: "org.loopring.crawler.models.WatchedLink"
+      crawl-method: jsoup
+      crawl-type: multiple
+      need-update: false
+      link-generator-config:
+        repeatedCrawlUrls:
+          - "https://www.blockchaintechnology-news.com/category/ethereum/"
+          - "https://www.blockchaintechnology-news.com/category/bitcoin/"
+          
  ###############################################################################
  ###############################################################################
  ###############################################################################
@@ -190,6 +202,10 @@ loopring:
         - name: "content"
           css-selector: "div.flash-item__body div"
           value-type: "article"
+        - name: "publishTimeStr"
+          value-type: "text"
+          css-selector: "div.flash-item__body span"
+          value-parser-class: "org.loopring.crawler.tasks.EightBitFlashPublishTimeStrParser"
         - name: "newsCategory"
           value-type: "constant"
           const-value: "flash"
@@ -283,13 +299,89 @@ loopring:
           value-type: "attr"
           attr-name: "style"
           value-parser-class: "org.loopring.crawler.tasks.LoopringBlogImageUrlParser"
+          
+###############################################################################
+    - key: blockchaintechnology-news-links
+      source-site-name: "blockchaintechnology-news"
+      is-root: true
+      name: root
+      value-type: node
+      css-selector: "ul.archive-list li"
+      children:
+        - name: "selectorKey"
+          value-type: "constant"
+          const-value: "blockchaintechnology-news"
+        - name: "sourceSiteName"
+          value-type: "constant"
+          const-value: "blockchaintechnology-news"
+        - name: "crawlType"
+          value-type: "constant"
+          const-value: "single"
+        - name: "crawlMethod"
+          value-type: "constant"
+          const-value: "jsoup"
+        - name: "targetEntity"
+          value-type: "constant"
+          const-value: "org.loopring.crawler.models.CnInfo"
+        - name: "taskName"
+          value-type: "constant"
+          const-value: "blockchaintechnology-news"
+        - name: "title"
+          css-selector: "a div.archive-list-out dive.archive-list-in div.archive-list-text h2"
+          value-type: "text"
+        - name: "url"
+          css-selector: "a"
+          value-type: "attr"
+          attr-name: "href"
+          
+    - key: blockchaintechnology-news
+      source-site-name: "blockchaintechnology-news"
+      is-root: true
+      name: root
+      value-type: node
+      css-selector: "article.post-area"
+      children:
+        - name: "title"
+          css-selector: "header h1"
+          value-type: "text"
+        - name: "content"
+          css-selector: "div#content-main"
+          value-type: "article"
+        - name: "newsCategory"
+          value-type: "constant"
+          const-value: "information"
+        - name: "bullIndex"
+          value-type: "constant"
+          const-value: 0
+        - name: "bearIndex"
+          value-type: "constant"
+          const-value: 0
+        - name: "forwardNum"
+          value-type: "constant"
+          const-value: 0
+        - name: "language"
+          value-type: "constant"
+          const-value: "en"
+        - name: "sourceUrl"
+          css-selector: "div#post-feat-img img"
+          value-type: "attr"
+          attr-name: "src"
+        - name: "publishTimeStr"
+          css-selector: "time.post-date"
+          value-type: "attr"
+          attr-name: "datetime"
+        - name: "author"
+          value-type: "text"
+          css-selector: "span.author-name a"
 
   link-tasks:
     - "jinse-links"
     - "loopring-blogs-links"
+    - "blockchaintechnology-news-links"
     
   entity-tasks:
     - "8btc-short-news-links"
     - "gongxiangcj-short-news-links"
     - "jinse-news"
     - "loopring-blogs"
+    - "blockchaintechnology-news"
