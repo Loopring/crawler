@@ -20,7 +20,8 @@ public class EightBitFlashPublishTimeStrParser implements ValueParser {
     	} 
     	
     	//时间格式hh:mm  
-    	String pattern = "^([1-9]|1[0-2]|0[1-9]){1}(:[0-5][0-9]){1}$"; 
+    	//String pattern = "^([1-9]|1[0-2]|0[1-9]){1}(:[0-5][0-9]){1}$"; 
+    	String pattern = "^([0-2][0-9]|0[1-9]){1}(:[0-5][0-9]){1}$"; 
     	boolean isMatch = Pattern.matches(pattern, publishTimeStr);
     	if (isMatch) {           
     		Date date0 = new Date();

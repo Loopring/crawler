@@ -5,11 +5,29 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import org.loopring.crawler.Utils;
+import org.loopring.crawler.models.BasicModel;
+import org.loopring.crawler.models.NewsInfo;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class DataUtil {
+	
+	public static String[] tagArray = {
+		"LRC,LRN,路印",
+	    "ETH,Ethereum,以太坊",
+	    "BTC,Bitcoin,比特币",
+	    "0x",
+	    "VITE",
+	    "EOS",
+	    "RDN,雷电,闪电网络",
+	    "GTO",
+	    "XRP,Ripple,瑞波",
+	    "USDT,TUSD",
+	    "NEO,ONT,小蚁"
+	    };
+	
+	public static int MAX_TAG_LENGTH = 100;
 
     public static void trimAllValue(Map<String, String> dataMap) {
         for (String key : dataMap.keySet()) {
@@ -25,7 +43,7 @@ public class DataUtil {
         String uuid = null;
         String uuidFields = dataMap.get("uuidFields");
         if (uuidFields == null || uuidFields.trim().equals("")) {
-            uuidFields = "url,content";
+            uuidFields = "title";
         }
 
         String[] fieldNames = uuidFields.split(",");
@@ -107,5 +125,41 @@ public class DataUtil {
             dataMap.put(key, value);
         }
     }
+    
+    public static void genTagForNews(Map<String, String> dataMap, Class<? extends BasicModel> dataClass) {
+    	if(dataClass != NewsInfo.class) {
+    		return;
+    	}
+    	StringBuffer tagValue = new StringBuffer("区块链");
+        String title = dataMap.get("title");
 
+        for (String tag : tagArray) {
+        	String[] keys = tag.split(",");
+        	for(String key : keys) {
+        		if(containsIgnoreCase(title, key)) {
+        			tagValue.append(",").append(tag);
+        			break;
+        		}
+        	}
+        	if (tagValue.length() > MAX_TAG_LENGTH) {
+        		break;
+        	}
+        }
+        dataMap.put("tags", tagValue.toString());
+        return;
+    }
+    
+    public static boolean containsIgnoreCase(String str, String searchStr)     {
+        if(str == null || searchStr == null) return false;
+
+        final int length = searchStr.length();
+        if (length == 0)
+            return true;
+
+        for (int i = str.length() - length; i >= 0; i--) {
+            if (str.regionMatches(true, i, searchStr, 0, length))
+                return true;
+        }
+        return false;
+    }
 }

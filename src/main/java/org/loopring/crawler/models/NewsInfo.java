@@ -9,9 +9,9 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "cn_info")
+@Table(name = "news_info")
 @Data
-public class CnInfo extends BasicModel {
+public class NewsInfo extends BasicModel {
 
     @Column(columnDefinition = "text")
     private String title;
@@ -39,6 +39,9 @@ public class CnInfo extends BasicModel {
 
     @Column(name = "source_url", columnDefinition = "text")
     private String sourceUrl;
+    
+    @Column(name = "image_url", columnDefinition = "text")
+    private String imageUrl;
 
     @Column
     private String author;

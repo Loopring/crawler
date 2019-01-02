@@ -13,11 +13,11 @@ import org.springframework.stereotype.Component;
 import org.loopring.crawler.Utils;
 import org.loopring.crawler.core.ValueParser;
 import org.loopring.crawler.models.BasicModel;
+import org.loopring.crawler.models.NewsInfo;
 import org.loopring.crawler.models.TimeCursor;
 import org.loopring.crawler.models.WatchedLink;
-import org.loopring.crawler.models.CnInfo;
-import org.loopring.crawler.repos.CnInfoRepo;
 import org.loopring.crawler.repos.WatchedLinkRepo;
+import org.loopring.crawler.repos.NewsInfoRepo;
 import org.loopring.crawler.repos.TimeCursorRepo;
 import org.loopring.crawler.util.ConvertUtil;
 import org.loopring.crawler.util.CrawlerCrudRepo;
@@ -36,13 +36,13 @@ public class JpaDataService {
     private TimeCursorRepo timeCursorRepo;
 
     @Autowired
-    private CnInfoRepo cnInfoRepo;
+    private NewsInfoRepo newsInfoRepo;
 
     public CrawlerCrudRepo<? extends BasicModel> getRepoByEntityName(String className) {
         CrawlerCrudRepo<? extends BasicModel> crudRepo = null;
         switch (className) {
             case "org.loopring.crawler.models.CnInfo":
-                crudRepo = cnInfoRepo;
+                crudRepo = newsInfoRepo;
                 break;
             default:
                 crudRepo = null;
@@ -82,9 +82,9 @@ public class JpaDataService {
                 wlSaver.setNeedUpdate(needUpdate);
                 wlSaver.saveData();
                 break;
-            case "org.loopring.crawler.models.CnInfo":
-                DataSaver<CnInfo> newsSaver = new DataSaver<>(dataMap, CnInfo.class);
-                newsSaver.setDataRepo(cnInfoRepo);
+            case "org.loopring.crawler.models.NewsInfo":
+                DataSaver<NewsInfo> newsSaver = new DataSaver<>(dataMap, NewsInfo.class);
+                newsSaver.setDataRepo(newsInfoRepo);
                 newsSaver.setNeedUpdate(needUpdate);
                 newsSaver.saveData();
                 break;
@@ -102,7 +102,7 @@ public class JpaDataService {
         List<String> resList;
         switch (entityClassName) {
             case "org.loopring.crawler.models.CnInfo":
-                CursoredDataFetcher<CnInfo> entFetcher = new CursoredDataFetcher<>(taskName, entityClassName, fieldName, cnInfoRepo);
+                CursoredDataFetcher<NewsInfo> entFetcher = new CursoredDataFetcher<>(taskName, entityClassName, fieldName, newsInfoRepo);
                 entFetcher.setTimeCursorRepo(timeCursorRepo);
                 entFetcher.setSourceSiteName(sourceSiteName);
                 resList = entFetcher.getFieldValues();

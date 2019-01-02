@@ -32,7 +32,7 @@ loopring:
     - task-name: gongxiangcj-short-news-links
       source-site-name: "共享财经"
       selector-key: gongxiangcj-short-news
-      target-entity: "org.loopring.crawler.models.CnInfo"
+      target-entity: "org.loopring.crawler.models.NewsInfo"
       crawl-method: jsoup
       crawl-type: multiple
       need-update: false
@@ -43,7 +43,7 @@ loopring:
     - task-name: 8btc-short-news-links
       source-site-name: "巴比特"
       selector-key: 8btc-short-news
-      target-entity: "org.loopring.crawler.models.CnInfo"
+      target-entity: "org.loopring.crawler.models.NewsInfo"
       crawl-method: jsoup
       crawl-type: multiple
       need-update: false
@@ -99,7 +99,7 @@ loopring:
           const-value: "jsoup"
         - name: "targetEntity"
           value-type: "constant"
-          const-value: "org.loopring.crawler.models.CnInfo"
+          const-value: "org.loopring.crawler.models.NewsInfo"
         - name: "taskName"
           value-type: "constant"
           const-value: "jinse-news"
@@ -247,7 +247,7 @@ loopring:
           const-value: "jsoup"
         - name: "targetEntity"
           value-type: "constant"
-          const-value: "org.loopring.crawler.models.CnInfo"
+          const-value: "org.loopring.crawler.models.NewsInfo"
         - name: "taskName"
           value-type: "constant"
           const-value: "loopring-blogs"
@@ -294,7 +294,7 @@ loopring:
         - name: "publishTimeStr"
           value-type: "text"
           css-selector: "header section time"
-        - name: "sourceUrl"
+        - name: "imageUrl"
           css-selector: "figure"
           value-type: "attr"
           attr-name: "style"
@@ -322,7 +322,7 @@ loopring:
           const-value: "jsoup"
         - name: "targetEntity"
           value-type: "constant"
-          const-value: "org.loopring.crawler.models.CnInfo"
+          const-value: "org.loopring.crawler.models.NewsInfo"
         - name: "taskName"
           value-type: "constant"
           const-value: "blockchaintechnology-news"
@@ -362,7 +362,7 @@ loopring:
         - name: "language"
           value-type: "constant"
           const-value: "en"
-        - name: "sourceUrl"
+        - name: "ImageUrl"
           css-selector: "div#post-feat-img img"
           value-type: "attr"
           attr-name: "src"

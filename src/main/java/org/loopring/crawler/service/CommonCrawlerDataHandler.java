@@ -26,6 +26,7 @@ public class CommonCrawlerDataHandler implements ResultDataHandler {
         DataUtil.trimAllValue(dataMap);
         String uuid = DataUtil.genUuidForData(dataMap);
         dataMap.put("uuid", uuid);
+        DataUtil.genTagForNews(dataMap, dataClass);
         log.info("saving result data: {}, uuid: {}", dataClass, uuid);
         saveData(dataMap, dataClass);
     }
