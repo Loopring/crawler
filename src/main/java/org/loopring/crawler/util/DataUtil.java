@@ -43,7 +43,12 @@ public class DataUtil {
         String uuid = null;
         String uuidFields = dataMap.get("uuidFields");
         if (uuidFields == null || uuidFields.trim().equals("")) {
-            uuidFields = "title";
+            // watched_link 里没有title, 所以使用url, news_info为了尽可能减少重复的新闻，所以用title
+            if (dataMap.get("title") == null) {
+                uuidFields = "url";
+            } else {
+                uuidFields = "title";
+            }
         }
 
         String[] fieldNames = uuidFields.split(",");
