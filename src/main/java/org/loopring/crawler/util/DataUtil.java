@@ -15,7 +15,7 @@ public class DataUtil {
 	
 	public static String[] tagArray = {
 		"LRC,LRN,路印",
-	    "ETH,Ethereum,以太坊",
+	    "ETH,Ethereum,WETH,以太坊",
 	    "BTC,Bitcoin,比特币",
 	    "0x",
 	    "VITE",

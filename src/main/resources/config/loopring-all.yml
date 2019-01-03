@@ -350,6 +350,7 @@ loopring:
         - name: "content"
           css-selector: "div#content-main"
           value-type: "article"
+          value-parser-class: "org.loopring.crawler.tasks.BlockchainNewsContentParse"         
         - name: "newsCategory"
           value-type: "constant"
           const-value: "information"
