@@ -145,11 +145,12 @@ public class DataUtil {
         		break;
         	}
         }
+    	tagValue.append(",").append(title);
         dataMap.put("tags", tagValue.toString());
         return;
     }
     
-    public static boolean containsIgnoreCase(String str, String searchStr)     {
+    public static boolean containsIgnoreCase(String str, String searchStr) {
         if(str == null || searchStr == null) return false;
 
         final int length = searchStr.length();

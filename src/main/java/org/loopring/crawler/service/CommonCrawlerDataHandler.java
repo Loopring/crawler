@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import org.loopring.crawler.core.ResultDataHandler;
 import org.loopring.crawler.models.BasicModel;
+import org.loopring.crawler.models.NewsInfo;
 import org.loopring.crawler.models.WatchedLink;
 import org.loopring.crawler.util.DataUtil;
 
@@ -38,7 +39,7 @@ public class CommonCrawlerDataHandler implements ResultDataHandler {
             log.warn("crawl result is empty. return.");
             return;
         }
-        if (dataClass == WatchedLink.class) {
+        if (dataClass == WatchedLink.class || dataClass == NewsInfo.class) {
             needUpdate = false;
         }
         jpaDataService.saveData(dataMap, dataClass, needUpdate);
