@@ -9,7 +9,7 @@ loopring:
 
   entity-processors:
     initial-delay-str: 8000
-    fixed-rate-str: 5000
+    fixed-rate-str: 15000
 
   processor-threadpool-max: 6
 
@@ -73,6 +73,17 @@ loopring:
         repeatedCrawlUrls:
           - "https://www.blockchaintechnology-news.com/category/ethereum/"
           - "https://www.blockchaintechnology-news.com/category/bitcoin/"
+          
+    - task-name: pivot-one-pc-news-links
+      source-site-name: "pivot.one"
+      selector-key: pivot-one-pc-news
+      target-entity: "org.loopring.crawler.models.NewsInfo"
+      crawl-method: jsoup
+      crawl-type: multiple
+      need-update: false
+      link-generator-config:
+        repeated-crawl-urls:
+          - "https://www.pivot.one/pc/news"
           
  ###############################################################################
  ###############################################################################
@@ -378,6 +389,48 @@ loopring:
         - name: "author"
           value-type: "text"
           css-selector: "span.author-name a"
+          
+###############################################################################
+    - key: pivot-one-pc-news
+      source-site-name: "pivot.one"
+      is-root: true
+      name: root
+      value-type: node
+      css-selector: "ul.ant-timeline li"
+      children:
+        - name: "title"
+          css-selector: "a.news_title"
+          value-type: "text"
+        - name: "publishTimeStr"
+          css-selector: "div.time_string"
+          value-type: "text"
+          value-parser-class: "org.loopring.crawler.tasks.PublishTimeStrParser"
+        - name: "content"
+          css-selector: "a.news_text"
+          value-type: "article"
+        - name: "newsCategory"
+          value-type: "constant"
+          const-value: "flash"
+        - name: "bullIndex"
+          value-type: "constant"
+          const-value: 0
+        - name: "bearIndex"
+          value-type: "constant"
+          const-value: 0
+        - name: "forwardNum"
+          value-type: "constant"
+          const-value: 0
+        - name: "language"
+          value-type: "constant"
+          const-value: "en"
+        - name: "sourceUrl"
+          css-selector: "a.news_source"
+          value-type: "attr"
+          attr-name: "href"
+        - name: "url"
+          css-selector: "a.news_source"
+          value-type: "attr"
+          attr-name: "href"
 
   link-tasks:
     - "jinse-links"
@@ -390,3 +443,4 @@ loopring:
     - "jinse-news"
     - "loopring-blogs"
     - "blockchaintechnology-news"
+    - "pivot-one-pc-news-links"
