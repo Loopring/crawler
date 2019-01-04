@@ -1,15 +1,15 @@
 loopring:
   link-collector:
     initial-delay-str: 5000
-    fixed-rate-str: 60000
+    fixed-rate-str: 600000
 
   link-processors:
     initial-delay-str: 5000
-    fixed-rate-str: 600000
+    fixed-rate-str: 900000
 
   entity-processors:
     initial-delay-str: 8000
-    fixed-rate-str: 15000
+    fixed-rate-str: 300000
 
   processor-threadpool-max: 6
 
