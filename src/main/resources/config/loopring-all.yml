@@ -160,6 +160,9 @@ loopring:
         - name: "forwardNum"
           value-type: "constant"
           const-value: 0
+        - name: "readNum"
+          value-type: "constant"
+          const-value: 0
           
 ###############################################################################
     - key: gongxiangcj-short-news
@@ -185,6 +188,9 @@ loopring:
         - name: "newsCategory"
           value-type: "constant"
           const-value: "flash"
+        - name: "language"
+          value-type: "constant"
+          const-value: "zh-Hans"
         - name: "bullIndex"
           value-type: "constant"
           const-value: 0
@@ -194,9 +200,9 @@ loopring:
         - name: "forwardNum"
           value-type: "constant"
           const-value: 0
-        - name: "language"
+        - name: "readNum"
           value-type: "constant"
-          const-value: "zh-Hans"
+          const-value: 0
           
  ###############################################################################
     - key: 8btc-short-news
@@ -222,6 +228,9 @@ loopring:
         - name: "newsCategory"
           value-type: "constant"
           const-value: "flash"
+        - name: "language"
+          value-type: "constant"
+          const-value: "zh-Hans"
         - name: "bullIndex"
           value-type: "constant"
           const-value: 0
@@ -231,9 +240,9 @@ loopring:
         - name: "forwardNum"
           value-type: "constant"
           const-value: 0
-        - name: "language"
+        - name: "readNum"
           value-type: "constant"
-          const-value: "zh-Hans"
+          const-value: 0
           
  ###############################################################################
     - key: loopring-blogs-links
@@ -299,6 +308,9 @@ loopring:
           value-type: "constant"
           const-value: 0
         - name: "forwardNum"
+          value-type: "constant"
+          const-value: 0
+        - name: "readNum"
           value-type: "constant"
           const-value: 0
         - name: "language"
@@ -374,6 +386,9 @@ loopring:
         - name: "forwardNum"
           value-type: "constant"
           const-value: 0
+        - name: "readNum"
+          value-type: "constant"
+          const-value: 0
         - name: "language"
           value-type: "constant"
           const-value: "en"
@@ -418,6 +433,9 @@ loopring:
           value-type: "constant"
           const-value: 0
         - name: "forwardNum"
+          value-type: "constant"
+          const-value: 0
+        - name: "readNum"
           value-type: "constant"
           const-value: 0
         - name: "language"

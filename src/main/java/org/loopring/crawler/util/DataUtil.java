@@ -26,7 +26,8 @@ public class DataUtil {
 	    "USDT,TUSD",
 	    "NEO,ONT,Ontology,小蚁,本体",
 	    "BTM,比原链",
-	    "MYTOKEN,MT"
+	    "MYTOKEN,MT",
+	    "TRX,TRON,波场"
 	    };
 	
 	public static int MAX_TAG_LENGTH = 100;

@@ -69,6 +69,9 @@ public class NewsInfo extends BasicModel {
     
     @Column(name = "forward_num")
     private Long forwardNum;
+    
+    @Column(name = "read_num")
+    private Long readNum;
 
     @Override
     public boolean isValid() {
