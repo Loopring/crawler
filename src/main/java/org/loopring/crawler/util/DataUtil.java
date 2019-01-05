@@ -24,7 +24,9 @@ public class DataUtil {
 	    "GTO",
 	    "XRP,Ripple,瑞波",
 	    "USDT,TUSD",
-	    "NEO,ONT,小蚁"
+	    "NEO,ONT,Ontology,小蚁,本体",
+	    "BTM,比原链",
+	    "MYTOKEN,MT"
 	    };
 	
 	public static int MAX_TAG_LENGTH = 100;
@@ -150,7 +152,7 @@ public class DataUtil {
         		break;
         	}
         }
-    	tagValue.append(",").append(title);
+    	//tagValue.append(",").append(title);
         dataMap.put("tags", tagValue.toString());
         return;
     }
