@@ -28,6 +28,7 @@ loopring:
           - "https://api.jinse.com/v1/topic/search?search=btc&page=1&limit=10&is_true=1&get_total=1"
           - "https://api.jinse.com/v1/topic/search?search=lrc&page=1&limit=10&is_true=1&get_total=1"
           - "https://api.jinse.com/v1/topic/search?search=lrn&page=1&limit=10&is_true=1&get_total=1"
+          - "https://api.jinse.com/v1/topic/search?search=加密货币&page=1&limit=10&is_true=1&get_total=1"
           
     - task-name: gongxiangcj-short-news-links
       source-site-name: "共享财经"
