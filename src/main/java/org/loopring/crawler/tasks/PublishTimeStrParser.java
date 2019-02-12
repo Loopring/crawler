@@ -17,8 +17,12 @@ import org.loopring.crawler.core.ValueParser;
 public class PublishTimeStrParser implements ValueParser {
 	@Override
 	public String parse(String publishTimeStr) {
+		Date dateCurrent = new Date();
+		SimpleDateFormat formatDefault = null;
+		
 		if (publishTimeStr == null) {
-			return null;
+			formatDefault = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			return formatDefault.format(dateCurrent.getTime());
 		}
 
 		@SuppressWarnings("serial")
@@ -42,8 +46,6 @@ public class PublishTimeStrParser implements ValueParser {
 			}
 		}
 
-		Date dateCurrent = new Date();
-		SimpleDateFormat formatDefault = null;
 		switch (key) {
 		case "hh:mm":
 			formatDefault = new SimpleDateFormat("yyyy-MM-dd");

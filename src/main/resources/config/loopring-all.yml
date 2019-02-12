@@ -538,6 +538,8 @@ loopring:
         - name: "language"
           value-type: "constant"
           const-value: "zh-Hans"
+        - name: "publishTimeStr"
+          value-parser-class: "org.loopring.crawler.tasks.PublishTimeStrParser"
           
 ###############################################################################
     - key: bitui-en-news-links
@@ -605,6 +607,8 @@ loopring:
         - name: "language"
           value-type: "constant"
           const-value: "en"
+        - name: "publishTimeStr"
+          value-parser-class: "org.loopring.crawler.tasks.PublishTimeStrParser"
           
   link-tasks:
     - "jinse-links"
