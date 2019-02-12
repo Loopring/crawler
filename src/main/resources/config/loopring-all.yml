@@ -86,6 +86,28 @@ loopring:
         repeated-crawl-urls:
           - "https://www.pivot.one/pc/news"
           
+    - task-name: bitui-cn-news-links
+      source-site-name: "比推"
+      selector-key: bitui-cn-news-links
+      target-entity: "org.loopring.crawler.models.WatchedLink"
+      crawl-method: jsoup
+      crawl-type: multiple
+      need-update: false
+      link-generator-config:
+        repeatedCrawlUrls:
+          - "https://www.bitpush.news/archives/category/xnews"
+          
+    - task-name: bitui-en-news-links
+      source-site-name: "bitpush"
+      selector-key: bitui-en-news-links
+      target-entity: "org.loopring.crawler.models.WatchedLink"
+      crawl-method: jsoup
+      crawl-type: multiple
+      need-update: false
+      link-generator-config:
+        repeatedCrawlUrls:
+          - "http://en.bitpush.news/archives/category/xnews"
+          
  ###############################################################################
  ###############################################################################
  ###############################################################################
@@ -450,11 +472,146 @@ loopring:
           css-selector: "a.news_source"
           value-type: "attr"
           attr-name: "href"
-
+###############################################################################
+    - key: bitui-cn-news-links
+      source-site-name: "比推"
+      is-root: true
+      name: root
+      value-type: node
+      css-selector: "div.artical-box div"
+      children:
+        - name: "selectorKey"
+          value-type: "constant"
+          const-value: "bitui-cn-news"
+        - name: "sourceSiteName"
+          value-type: "constant"
+          const-value: "比推"
+        - name: "crawlType"
+          value-type: "constant"
+          const-value: "single"
+        - name: "crawlMethod"
+          value-type: "constant"
+          const-value: "jsoup"
+        - name: "targetEntity"
+          value-type: "constant"
+          const-value: "org.loopring.crawler.models.NewsInfo"
+        - name: "taskName"
+          value-type: "constant"
+          const-value: "bitui-cn-news"
+        - name: "title"
+          css-selector: "div.artical-left a"
+          value-type: "attr"
+          attr-name: "title"
+        - name: "url"
+          css-selector: "div.artical-left a"
+          value-type: "attr"
+          attr-name: "href"
+          
+    - key: bitui-cn-news
+      source-site-name: "比推"
+      is-root: true
+      name: root
+      value-type: node
+      css-selector: "div.post-single"
+      children:
+        - name: "title"
+          css-selector: "div.post-title-single h2"
+          value-type: "owntext"
+        - name: "content"
+          css-selector: "div.post-content"
+          value-type: "article"       
+        - name: "newsCategory"
+          value-type: "constant"
+          const-value: "news"
+        - name: "bullIndex"
+          value-type: "constant"
+          const-value: 0
+        - name: "bearIndex"
+          value-type: "constant"
+          const-value: 0
+        - name: "forwardNum"
+          value-type: "constant"
+          const-value: 0
+        - name: "readNum"
+          value-type: "constant"
+          const-value: 0
+        - name: "language"
+          value-type: "constant"
+          const-value: "zh-Hans"
+          
+###############################################################################
+    - key: bitui-en-news-links
+      source-site-name: "bitpush"
+      is-root: true
+      name: root
+      value-type: node
+      css-selector: "div.artical-box div"
+      children:
+        - name: "selectorKey"
+          value-type: "constant"
+          const-value: "bitui-en-news"
+        - name: "sourceSiteName"
+          value-type: "constant"
+          const-value: "bitpush"
+        - name: "crawlType"
+          value-type: "constant"
+          const-value: "single"
+        - name: "crawlMethod"
+          value-type: "constant"
+          const-value: "jsoup"
+        - name: "targetEntity"
+          value-type: "constant"
+          const-value: "org.loopring.crawler.models.NewsInfo"
+        - name: "taskName"
+          value-type: "constant"
+          const-value: "bitui-en-news"
+        - name: "title"
+          css-selector: "div.artical-left a"
+          value-type: "attr"
+          attr-name: "title"
+        - name: "url"
+          css-selector: "div.artical-left a"
+          value-type: "attr"
+          attr-name: "href"
+          
+    - key: bitui-en-news
+      source-site-name: "bitpush"
+      is-root: true
+      name: root
+      value-type: node
+      css-selector: "div.post-single"
+      children:
+        - name: "title"
+          css-selector: "div.post-title-single h2"
+          value-type: "owntext"
+        - name: "content"
+          css-selector: "div.post-content"
+          value-type: "article"       
+        - name: "newsCategory"
+          value-type: "constant"
+          const-value: "news"
+        - name: "bullIndex"
+          value-type: "constant"
+          const-value: 0
+        - name: "bearIndex"
+          value-type: "constant"
+          const-value: 0
+        - name: "forwardNum"
+          value-type: "constant"
+          const-value: 0
+        - name: "readNum"
+          value-type: "constant"
+          const-value: 0
+        - name: "language"
+          value-type: "constant"
+          const-value: "en"
+          
   link-tasks:
     - "jinse-links"
     - "loopring-blogs-links"
     - "blockchaintechnology-news-links"
+    - "bitui-cn-news-links"
+    - "bitui-en-news-links"
     
   entity-tasks:
     - "8btc-short-news-links"
@@ -463,3 +620,5 @@ loopring:
     - "loopring-blogs"
     - "blockchaintechnology-news"
     - "pivot-one-pc-news-links"
+    - "bitui-cn-news"
+    - "bitui-en-news"
