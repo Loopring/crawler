@@ -16,18 +16,22 @@ public class DataUtil {
 	public static String[] tagArray = {
 		"LRC,LRN,路印",
 	    "ETH,Ethereum,WETH,以太坊",
-	    "BTC,Bitcoin,比特币",
+	    "BTC,Bitcoin,WBTC,比特币",
 	    "0x",
 	    "VITE",
 	    "EOS",
 	    "RDN,雷电,闪电网络",
 	    "GTO",
 	    "XRP,Ripple,瑞波",
-	    "USDT,TUSD",
+	    "USDT,TUSD,USDC",
 	    "NEO,ONT,Ontology,小蚁,本体",
 	    "BTM,比原链",
 	    "MYTOKEN,MT",
-	    "TRX,TRON,波场"
+	    "TRX,TRON,波场",
+	    "MANA,Decentraland",
+	    "SALT",
+	    "APPC,AppCoins",
+	    "ARP,阿普协议"
 	    };
 	
 	public static int MAX_TAG_LENGTH = 100;
