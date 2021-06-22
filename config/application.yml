@@ -18,9 +18,9 @@ spring:
 common:
   datasource:
     db-local:
-      url: jdbc:mysql://localhost/crawler?useUnicode=true&amp;characterEncoding=UTF-8&verifyServerCertificate=false&useSSL=false&requireSSL=false
-      username: root
-      password: 111111
+      url: jdbc:mysql://127.0.0.1:3306/crawler?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=GMT
+      username: crawler
+      password: crawler123!
 
   crawljax:
     browser-type: chrome
