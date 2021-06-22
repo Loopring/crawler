@@ -16,9 +16,11 @@ import org.loopring.crawler.models.BasicModel;
 import org.loopring.crawler.models.NewsInfo;
 import org.loopring.crawler.models.TimeCursor;
 import org.loopring.crawler.models.WatchedLink;
+import org.loopring.crawler.models.Coin;
 import org.loopring.crawler.repos.WatchedLinkRepo;
 import org.loopring.crawler.repos.NewsInfoRepo;
 import org.loopring.crawler.repos.TimeCursorRepo;
+import org.loopring.crawler.repos.CoinRepo;
 import org.loopring.crawler.util.ConvertUtil;
 import org.loopring.crawler.util.CrawlerCrudRepo;
 
@@ -37,6 +39,9 @@ public class JpaDataService {
 
     @Autowired
     private NewsInfoRepo newsInfoRepo;
+
+    @Autowired
+    private CoinRepo coinRepo;
 
     public CrawlerCrudRepo<? extends BasicModel> getRepoByEntityName(String className) {
         CrawlerCrudRepo<? extends BasicModel> crudRepo = null;
@@ -87,6 +92,12 @@ public class JpaDataService {
                 newsSaver.setDataRepo(newsInfoRepo);
                 newsSaver.setNeedUpdate(needUpdate);
                 newsSaver.saveData();
+                break;
+            case "org.loopring.crawler.models.Coin":
+                DataSaver<Coin> coinSaver = new DataSaver<>(dataMap, Coin.class);
+                coinSaver.setDataRepo(coinRepo);
+                coinSaver.setNeedUpdate(needUpdate);
+                coinSaver.saveData();
                 break;
             default:
                 throw new IllegalStateException("data persist service not implemented for dataType:" + dataClass.getName());
