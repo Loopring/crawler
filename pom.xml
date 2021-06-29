@@ -232,14 +232,41 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>2.2.4</version>
+                <executions>
+                    <execution>
+                        <id>get-the-git-infos</id>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <injectAllReactorProjects>true</injectAllReactorProjects>
+                    <dateFormat>yyyy.MM.dd HH:mm:ss</dateFormat>
+                    <verbose>true</verbose>
+                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                    <gitDescribe>
+                        <skip>false</skip>
+                        <always>false</always>
+                        <abbrev>7</abbrev>
+                        <dirty>-dirty</dirty>
+                        <forceLongFormat>false</forceLongFormat>
+                    </gitDescribe>
+                </configuration>
+            </plugin>
+            <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>0.4.13</version>
                 <configuration>
+                    <imageTags>
+                        <imageTag>${git.commit.id}</imageTag>
+                    </imageTags>
                     <imageName>${project.artifactId}</imageName>
                     <dockerDirectory>./</dockerDirectory>
-                    <!-- ????docker?????????????API???2375?????????docker?? -->
-                    <!-- ??????????DOCKER_HOST???????tcp://docker-host-ip:2375 -->
                     <dockerHost>unix:///var/run/docker.sock</dockerHost>
                     <resources>
                         <resource>
