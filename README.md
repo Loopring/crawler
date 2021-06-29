@@ -11,3 +11,7 @@ collation-server=utf8_general_ci
 ```
 create database crawler CHARACTER SET utf8 COLLATE utf8_general_ci;
 ```
+
+```
+mvn clean package spring-boot:repackage -DskipTests docker:build
+```
