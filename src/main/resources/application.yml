@@ -18,9 +18,9 @@ spring:
 common:
   datasource:
     db-local:
-      url: jdbc:mysql://localhost/crawler?useUnicode=true&amp;characterEncoding=UTF-8&verifyServerCertificate=false&useSSL=false&requireSSL=false
-      username: ${crawler_ username}
-      password: ${crawler_ password}
+      url: jdbc:mysql://${CRAWLER_IP}/crawler?useUnicode=true&amp;characterEncoding=UTF-8&verifyServerCertificate=false&useSSL=false&requireSSL=false
+      username: ${CRAWLER_USERNAME}
+      password: ${CRAWLER_PASSWORD}
       driver-class-name: com.mysql.jdbc.Driver
       test-on-borrow: true
       validation-query: SELECT version()
