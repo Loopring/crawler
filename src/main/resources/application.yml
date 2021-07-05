@@ -19,8 +19,8 @@ common:
   datasource:
     db-local:
       url: jdbc:mysql://localhost/crawler?useUnicode=true&amp;characterEncoding=UTF-8&verifyServerCertificate=false&useSSL=false&requireSSL=false
-      username: root
-      password: 111111
+      username: ${crawler_ username}
+      password: ${crawler_ password}
       driver-class-name: com.mysql.jdbc.Driver
       test-on-borrow: true
       validation-query: SELECT version()
