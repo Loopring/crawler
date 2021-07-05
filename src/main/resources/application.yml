@@ -18,7 +18,7 @@ spring:
 common:
   datasource:
     db-local:
-      url: jdbc:mysql://${CRAWLER_IP}/crawler?useUnicode=true&amp;characterEncoding=UTF-8&verifyServerCertificate=false&useSSL=false&requireSSL=false
+      url: jdbc:mysql://${CRAWLER_IP}/crawler?useUnicode=true&characterEncoding=UTF-8&verifyServerCertificate=false&useSSL=false&requireSSL=false
       username: ${CRAWLER_USERNAME}
       password: ${CRAWLER_PASSWORD}
       driver-class-name: com.mysql.jdbc.Driver
